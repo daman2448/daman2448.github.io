@@ -3,73 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiFi Finder - Find Free WiFi Hotspots Nearby</title>
-    <meta name="description" content="Discover WiFi hotspots near you. Available on iOS and Android.">
+    <title>WiFi Finder — Find Free WiFi Hotspots Nearby</title>
+    <meta name="description" content="WiFi Finder helps you discover community-shared WiFi hotspots near you. Get directions, view passwords, and connect easily. Available on iOS and Android.">
+    <meta property="og:title" content="WiFi Finder — Find WiFi Hotspots Nearby">
+    <meta property="og:description" content="Discover trusted WiFi networks around you. Available on iOS and Android.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://daman2448.github.io/wifi-finder/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📶%3C/text%3E%3C/svg%3E">
+
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --blue: #1976D2;
+            --blue-dark: #0D47A1;
+            --green: #009900;
+            --gray: #6B7280;
+            --bg: #F9FAFB;
+            --text: #111827;
+        }
+        html { scroll-behavior: smooth; }
         body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
             color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 80px 24px 60px;
             text-align: center;
-            padding: 24px;
+            position: relative;
+            overflow: hidden;
         }
-        .container { max-width: 400px; }
-        .logo {
-            width: 110px;
-            height: 110px;
-            background: rgba(255,255,255,0.15);
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            background: rgba(255,255,255,0.08);
             border-radius: 50%;
+        }
+        .hero::before { width: 400px; height: 400px; top: -150px; right: -100px; }
+        .hero::after { width: 300px; height: 300px; bottom: -150px; left: -100px; }
+        .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+        .logo-circle {
+            width: 96px; height: 96px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 48px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .hero .tagline {
+            font-size: 22px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin: 40px auto 32px;
+            flex-wrap: wrap;
+        }
+        .stat {
+            text-align: center;
+            min-width: 100px;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            display: block;
+        }
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 28px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .btn-apple { background: black; color: white; }
+        .btn-google { background: white; color: var(--blue-dark); }
+        .btn-icon { font-size: 24px; }
+
+        /* Features */
+        .features {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 56px;
+            font-size: 18px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .feature-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
-            font-size: 56px;
+            font-size: 26px;
+            margin-bottom: 16px;
         }
-        h1 { font-size: 36px; margin: 0 0 8px; }
-        .tagline { opacity: 0.85; font-size: 16px; margin: 0 0 32px; }
-        .btn {
-            display: block;
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .feature-card p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* How it works */
+        .how-section {
             background: white;
-            color: #1565C0;
-            text-decoration: none;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            margin: 12px 0;
-            font-size: 16px;
-            transition: transform 0.2s;
+            padding: 80px 24px;
         }
-        .btn:hover { transform: scale(1.02); }
-        .btn-android { background: #34A853; color: white; }
-        .footer { font-size: 13px; opacity: 0.7; margin-top: 24px; }
+        .how-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+        }
+        .how-step {
+            text-align: center;
+        }
+        .how-num {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .how-step h4 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .how-step p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            color: white;
+            padding: 80px 24px;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .cta-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1F2937;
+            color: #9CA3AF;
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 14px;
+        }
+        footer a { color: #D1D5DB; text-decoration: none; margin: 0 12px; }
+        footer a:hover { color: white; }
+
+        @media (max-width: 600px) {
+            .hero { padding: 60px 20px 40px; }
+            .hero h1 { font-size: 40px; }
+            .hero .tagline { font-size: 18px; }
+            .section-title { font-size: 28px; }
+            .stat-value { font-size: 26px; }
+            .cta-section h2 { font-size: 28px; }
+        }
     </style>
+
     <script>
-        // Auto-redirect based on platform
-        (function() {
+        // Smart redirect for mobile users — only on direct link visits
+        document.addEventListener('DOMContentLoaded', function() {
+            // Don't redirect if user came from a search engine or specific page
+            if (window.location.search.includes('noredirect')) return;
+
             const ua = navigator.userAgent || '';
             const isIOS = /iPad|iPhone|iPod/.test(ua);
             const isAndroid = /Android/i.test(ua);
+
+            // Add a small delay so users see the page briefly before redirect
             if (isIOS) {
-                window.location.replace('https://apps.apple.com/app/id6761415389');
+                setTimeout(function() {
+                    window.location.href = 'https://apps.apple.com/app/id6761415389';
+                }, 800);
             } else if (isAndroid) {
-                window.location.replace('https://play.google.com/store/apps/details?id=com.easyway.freewifi');
+                setTimeout(function() {
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.easyway.freewifi';
+                }, 800);
             }
-        })();
+        });
     </script>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">📶</div>
-        <h1>WiFi Finder</h1>
-        <p class="tagline">Find WiFi hotspots nearby</p>
-        <a href="https://apps.apple.com/app/id6761415389" class="btn">Download on the App Store</a>
-        <a href="https://play.google.com/store/apps/details?id=com.easyway.freewifi" class="btn btn-android">Get it on Google Play</a>
-        <p class="footer">Available on iOS and Android</p>
-    </div>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="logo-circle">📶</div>
+            <h1>WiFi Finder</h1>
+            <p class="tagline">Find WiFi hotspots nearby — wherever you go</p>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-value">60+</span>
+                    <span class="stat-label">Countries</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">1M+</span>
+                    <span class="stat-label">Hotspots</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">100K+</span>
+                    <span class="stat-label">Users</span>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="https://apps.apple.com/app/id6761415389" class="btn btn-apple">
+                    <span class="btn-icon">🍎</span>
+                    <span>Download on the App Store</span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.easyway.freewifi" class="btn btn-google">
+                    <span class="btn-icon">▶️</span>
+                    <span>Get it on Google Play</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <h2 class="section-title">Everything you need to stay connected</h2>
+        <p class="section-sub">Built for travelers, students, and anyone who needs WiFi on the go</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Discover Hotspots</h3>
+                <p>Find WiFi networks around you instantly with location-based search.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>WiFi on the Map</h3>
+                <p>See all nearby hotspots on a map and get walking directions to them.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Trusted Networks</h3>
+                <p>Passwords are shared and verified by our active community of users.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⬇️</div>
+                <h3>Works Offline</h3>
+                <p>Download WiFi data for any country or city to use without internet.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Speed Test</h3>
+                <p>Built-in speed test to check the quality of your WiFi connection.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Earn Rewards</h3>
+                <p>Level up by sharing networks and unlock more features and connects.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-section">
+        <h2 class="section-title">How it works</h2>
+        <p class="section-sub">Get connected in seconds</p>
+
+        <div class="how-grid">
+            <div class="how-step">
+                <div class="how-num">1</div>
+                <h4>Open the app</h4>
+                <p>Allow location access to find WiFi networks around you.</p>
+            </div>
+            <div class="how-step">
+                <div class="how-num">2</div>
+                <h4>Browse hotspots</h4>
+                <p>See a list of verified WiFi networks sorted by distance.</p>
+            </div>
+            <div class="how-step">
+                <div class="how-num">3</div>
+                <h4>Get directions</h4>
+                <p>Tap any network to see its location and get directions.</p>
+            </div>
+            <div class="how-step">
+                <div class="how-num">4</div>
+                <h4>Connect easily</h4>
+                <p>View shared passwords and connect to free WiFi instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="cta-section">
+        <h2>Never be without internet again</h2>
+        <p>Join thousands of users finding free WiFi every day</p>
+        <div class="cta-buttons">
+            <a href="https://apps.apple.com/app/id6761415389" class="btn btn-apple">
+                <span class="btn-icon">🍎</span>
+                <span>Download for iOS</span>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.easyway.freewifi" class="btn btn-google">
+                <span class="btn-icon">▶️</span>
+                <span>Download for Android</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>
+            <a href="https://daman2448.github.io/freewifi-privacy/">Privacy Policy</a> ·
+            <a href="mailto:findaneasyway@gmail.com">Contact</a>
+        </p>
+        <p style="margin-top: 12px;">© 2026 WiFi Finder. All rights reserved.</p>
+    </footer>
 </body>
 </html>
